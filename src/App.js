@@ -8,7 +8,14 @@ class App extends Component {
       { name: "Hafeez", age: "29" },
       { name: "Mujju", age: "29" },
       { name: "Afshan", age: "24" }
-    ]
+    ],
+    showPerson: false
+  };
+
+  deletePersonData = (personindex) => {
+    const persons = this.state.person;
+    persons.splice(personindex, 1);
+    this.setState({ person: persons });
   };
 
   switchNameHandler = (myParameter) => {
@@ -21,29 +28,40 @@ class App extends Component {
     });
   };
 
+  toggleEventHandler = () => {
+    const personstatus = this.state.showPerson;
+    this.setState({
+      showPerson: !personstatus
+    });
+  };
+
   render() {
+    let persons = null;
+    if (this.state.showPerson) {
+      persons = (
+        <div>
+          {this.state.person.map((personinfo, index) => {
+            return (
+              <Mydata
+                click={() => this.deletePersonData(index)}
+                name={personinfo.name}
+                age={personinfo.age}
+              />
+            );
+          })}
+        </div>
+      );
+    }
     return (
       <div className="App">
         <h1>Hello CodeSandbox</h1>
-
-        <Mydata
-          name={this.state.person[0].name}
-          age={this.state.person[0].age}
-        />
-        <Mydata
-          click={this.switchNameHandler.bind(this, "Khan")}
-          name={this.state.person[1].name}
-          age={this.state.person[1].age}
-        >
-          He is very special
-        </Mydata>
-        <Mydata
-          name={this.state.person[2].name}
-          age={this.state.person[2].age}
-        />
+        {persons}
         <button onClick={() => this.switchNameHandler("arfaaz")}>
           Try me!
         </button>
+        <br />
+
+        <button onClick={this.toggleEventHandler}>Toggle Person</button>
       </div>
     );
   }
