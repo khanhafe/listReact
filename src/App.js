@@ -1,19 +1,31 @@
 import React, { Component } from "react";
 import "./styles.css";
 import Mydata from "./Mydata";
+import PropTypes from "prop-types";
 
 class App extends Component {
-  state = {
-    person: [
-      { name: "Hafeez", age: "29" },
-      { name: "Mujju", age: "29" },
-      { name: "Afshan", age: "24" }
-    ],
-    showPerson: false
-  };
+  constructor(props) {
+    super(props);
+    console.log("[App.js] constructor");
+    this.state = {
+      person: [
+        { name: "Hafeez", age: "29" },
+        { name: "Mujju", age: "29" },
+        { name: "Afshan", age: "24" }
+      ],
+      showPerson: false
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+    console.log("App.js getDerivedStateFromProps", props);
+    return null;
+  }
+  componentDidMount() {
+    console.log("App.js componentDidMount");
+  }
 
   deletePersonData = (personindex) => {
-    const persons = this.state.person;
+    const persons = [...this.state.person];
     persons.splice(personindex, 1);
     this.setState({ person: persons });
   };
@@ -54,7 +66,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Hello CodeSandbox</h1>
+        <h1>{this.props.title}</h1>
         {persons}
         <button onClick={() => this.switchNameHandler("arfaaz")}>
           Try me!
@@ -66,4 +78,9 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  age: PropTypes.number
+};
+
 export default App;
