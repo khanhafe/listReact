@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "./styles.css";
 import Mydata from "./Mydata";
 import PropTypes from "prop-types";
+import Aux from "./hoc/Auxi";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import Validationform from "./Validationform";
 
 class App extends Component {
   constructor(props) {
@@ -65,16 +68,25 @@ class App extends Component {
       );
     }
     return (
-      <div className="App">
-        <h1>{this.props.title}</h1>
-        {persons}
-        <button onClick={() => this.switchNameHandler("arfaaz")}>
-          Try me!
-        </button>
-        <br />
+      <Aux>
+        <BrowserRouter>
+          <li>
+            <Link to="/validation">validate Form</Link>
+          </li>
 
-        <button onClick={this.toggleEventHandler}>Toggle Person</button>
-      </div>
+          <div className="App">
+            <h1>{this.props.title}</h1>
+            {persons}
+            <button onClick={() => this.switchNameHandler("arfaaz")}>
+              Try me!
+            </button>
+            <br />
+
+            <button onClick={this.toggleEventHandler}>Toggle Person</button>
+          </div>
+          <Route exact path="/validation" component={Validationform} />
+        </BrowserRouter>
+      </Aux>
     );
   }
 }
