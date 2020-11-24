@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Aux from "./hoc/Auxi";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import Validationform from "./Validationform";
+import Counter from "./Counter";
 
 class App extends Component {
   constructor(props) {
@@ -73,6 +74,9 @@ class App extends Component {
           <li>
             <Link to="/validation">validate Form</Link>
           </li>
+          <li>
+            <Link to="/counter">Counter</Link>
+          </li>
 
           <div className="App">
             <h1>{this.props.title}</h1>
@@ -85,6 +89,7 @@ class App extends Component {
             <button onClick={this.toggleEventHandler}>Toggle Person</button>
           </div>
           <Route exact path="/validation" component={Validationform} />
+          <Route exact path="/counter" component={Counter} />
         </BrowserRouter>
       </Aux>
     );
