@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class Counter extends Component {
   state = {
@@ -35,10 +36,10 @@ class Counter extends Component {
       <div
         style={{ border: "4px solid red", marginTop: "20px", height: "200px" }}
       >
-        <div>my Result :{this.state.counter} </div>
+        <div>my Result :{this.props.ctr} </div>
         <br />
-        <button onClick={() => this.changeCounter("inc")}>Increment</button>
-        <button onClick={() => this.changeCounter("dec")}>Decrement</button>
+        <button onClick={this.props.onIncrement}>Increment</button>
+        <button onClick={this.props.onDecrement}>Decrement</button>
         <button onClick={() => this.changeCounter("add", 5)}>Add</button>
         <button onClick={() => this.changeCounter("sub", 5)}>Subtract</button>
       </div>
@@ -46,4 +47,17 @@ class Counter extends Component {
   }
 }
 
-export default Counter;
+const mapStateToProps = (state) => {
+  return {
+    ctr: state.counter
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onIncrement: () => dispatch({ type: "INCREMENT" }),
+    onDecrement: () => dispatch({ type: "DECREMENT" })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
