@@ -40,8 +40,13 @@ class Counter extends Component {
         <br />
         <button onClick={this.props.onIncrement}>Increment</button>
         <button onClick={this.props.onDecrement}>Decrement</button>
-        <button onClick={() => this.changeCounter("add", 5)}>Add</button>
-        <button onClick={() => this.changeCounter("sub", 5)}>Subtract</button>
+        <button onClick={this.props.onAdd}>Add 10</button>
+        <button onClick={this.props.onSub}>Subtract 5</button>
+        <hr />
+        <button onClick={this.props.showResult}>Show Result</button>
+        {this.props.result.map((el) => (
+          <li>{el.value}</li>
+        ))}
       </div>
     );
   }
@@ -49,14 +54,18 @@ class Counter extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ctr: state.counter
+    ctr: state.counter,
+    result: state.results
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onIncrement: () => dispatch({ type: "INCREMENT" }),
-    onDecrement: () => dispatch({ type: "DECREMENT" })
+    onDecrement: () => dispatch({ type: "DECREMENT" }),
+    onAdd: () => dispatch({ type: "ADD", val: 10 }),
+    onSub: () => dispatch({ type: "SUB", val: 5 }),
+    showResult: () => dispatch({ type: "SHOW_RESULT" })
   };
 };
 

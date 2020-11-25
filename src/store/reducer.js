@@ -1,19 +1,38 @@
 const initialState = {
-  counter: 2
+  counter: 2,
+  results: []
 };
 
 const reducer = (state = initialState, action) => {
-  if (action.type === "INCREMENT") {
-    return {
-      counter: state.counter + 1
-    };
+  switch (action.type) {
+    case "INCREMENT":
+      return {
+        ...state,
+        counter: state.counter + 1
+      };
+    case "DECREMENT":
+      return {
+        ...state,
+        counter: state.counter - 1
+      };
+    case "ADD":
+      return {
+        ...state,
+        counter: state.counter + action.val
+      };
+    case "SUB":
+      return {
+        ...state,
+        counter: state.counter - action.val
+      };
+    case "SHOW_RESULT":
+      return {
+        ...state,
+        results: state.results.concat({ id: new Date(), value: state.counter })
+      };
+    default:
+      return state;
   }
-  if (action.type === "DECREMENT") {
-    return {
-      counter: state.counter - 1
-    };
-  }
-  return state;
 };
 
 export default reducer;
